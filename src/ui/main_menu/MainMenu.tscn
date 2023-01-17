@@ -1,4 +1,6 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://canvas/icegirl/idle/idle.png" type="Texture" id=1]
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
@@ -7,3 +9,49 @@ anchor_bottom = 1.0
 [node name="Panel" type="Panel" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 502.0
+margin_bottom = 290.0
+custom_constants/separation = 10
+
+[node name="Control" type="Control" parent="Panel/MarginContainer/HBoxContainer"]
+margin_right = 321.0
+margin_bottom = 280.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/HBoxContainer"]
+margin_left = 331.0
+margin_right = 492.0
+margin_bottom = 280.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 10
+
+[node name="SelectBTN_MB" type="TextureButton" parent="Panel/MarginContainer/HBoxContainer/VBoxContainer"]
+margin_right = 161.0
+margin_bottom = 135.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture_normal = ExtResource( 1 )
+expand = true
+stretch_mode = 5
+
+[node name="SelectBTN_IG" type="TextureButton" parent="Panel/MarginContainer/HBoxContainer/VBoxContainer"]
+margin_top = 145.0
+margin_right = 161.0
+margin_bottom = 280.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
