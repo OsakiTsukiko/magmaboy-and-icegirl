@@ -8,10 +8,10 @@ extents = Vector2( 415.5, 10 )
 [node name="Node2D" type="Node2D"]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2( 443, 290 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2( 370, 297 )
 shape = SubResource( 1 )
 
-[node name="Entity2D" parent="StaticBody2D/CollisionShape2D" instance=ExtResource( 1 )]
-position = Vector2( -143, -200 )
+[node name="Entity2D" parent="." instance=ExtResource( 1 )]
+position = Vector2( 227, 97 )
