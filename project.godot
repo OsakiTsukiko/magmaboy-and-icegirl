@@ -60,6 +60,10 @@ texture={
 "svg/scale": 1.0
 }
 
+[info]
+
+github_url="https://github.com/OsakiTsukiko/magmaboy-and-icegirl"
+
 [input]
 
 move_right={
