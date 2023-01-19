@@ -7,9 +7,7 @@
 [ext_resource path="res://assets/ui/main_menu/button/button_normal.tres" type="StyleBox" id=5]
 [ext_resource path="res://assets/icons/github.png" type="Texture" id=6]
 [ext_resource path="res://src/ui/main_menu/MainMenu.gd" type="Script" id=7]
-
-[sub_resource type="StyleBoxFlat" id=1]
-bg_color = Color( 0.0705882, 0.0666667, 0.0666667, 1 )
+[ext_resource path="res://assets/ui/main_menu/bg/bg_panel.tres" type="StyleBox" id=8]
 
 [sub_resource type="DynamicFont" id=2]
 size = 24
@@ -36,7 +34,7 @@ script = ExtResource( 7 )
 [node name="BG" type="Panel" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_styles/panel = SubResource( 1 )
+custom_styles/panel = ExtResource( 8 )
 
 [node name="CenterContainer" type="CenterContainer" parent="BG"]
 anchor_right = 1.0

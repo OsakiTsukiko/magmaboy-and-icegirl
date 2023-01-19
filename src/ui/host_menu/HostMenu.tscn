@@ -1,0 +1,129 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://assets/fonts/PressStart2P.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://assets/ui/main_menu/bg/bg_panel.tres" type="StyleBox" id=2]
+[ext_resource path="res://assets/fonts/Monocraft.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://assets/ui/host_menu/df/label_font.tres" type="DynamicFont" id=4]
+[ext_resource path="res://assets/ui/host_menu/line_edit.tres" type="StyleBox" id=5]
+[ext_resource path="res://src/ui/host_menu/HostMenu.gd" type="Script" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 9
+font_data = ExtResource( 3 )
+
+[sub_resource type="Theme" id=5]
+
+[sub_resource type="StyleBoxFlat" id=3]
+content_margin_left = 5.0
+content_margin_right = 5.0
+content_margin_top = 5.0
+content_margin_bottom = 5.0
+bg_color = Color( 0.2, 0.2, 0.2, 1 )
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id=4]
+content_margin_left = 5.0
+content_margin_right = 5.0
+content_margin_top = 5.0
+content_margin_bottom = 5.0
+bg_color = Color( 0.109804, 0.109804, 0.109804, 1 )
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[node name="HostMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 6 )
+
+[node name="BG" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = ExtResource( 2 )
+
+[node name="CenterContainer" type="CenterContainer" parent="BG"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="BG/CenterContainer"]
+margin_left = 156.0
+margin_top = 94.0
+margin_right = 356.0
+margin_bottom = 205.0
+rect_min_size = Vector2( 200, 0 )
+
+[node name="Title" type="Label" parent="BG/CenterContainer/VBoxContainer"]
+margin_right = 200.0
+margin_bottom = 16.0
+custom_fonts/font = SubResource( 1 )
+text = "Host Game"
+align = 1
+valign = 1
+
+[node name="GridContainer" type="GridContainer" parent="BG/CenterContainer/VBoxContainer"]
+margin_top = 20.0
+margin_right = 200.0
+margin_bottom = 62.0
+columns = 2
+
+[node name="ULabel" type="Label" parent="BG/CenterContainer/VBoxContainer/GridContainer"]
+margin_top = 5.0
+margin_right = 48.0
+margin_bottom = 14.0
+custom_fonts/font = ExtResource( 4 )
+text = "Username"
+
+[node name="Username" type="LineEdit" parent="BG/CenterContainer/VBoxContainer/GridContainer"]
+margin_left = 52.0
+margin_right = 200.0
+margin_bottom = 19.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 2 )
+custom_styles/normal = ExtResource( 5 )
+placeholder_text = "Godette"
+
+[node name="PLabel" type="Label" parent="BG/CenterContainer/VBoxContainer/GridContainer"]
+margin_top = 28.0
+margin_right = 48.0
+margin_bottom = 37.0
+custom_fonts/font = ExtResource( 4 )
+text = "Port"
+
+[node name="Port" type="LineEdit" parent="BG/CenterContainer/VBoxContainer/GridContainer"]
+margin_left = 52.0
+margin_top = 23.0
+margin_right = 200.0
+margin_bottom = 42.0
+custom_fonts/font = ExtResource( 4 )
+custom_styles/normal = ExtResource( 5 )
+text = "26356"
+placeholder_text = "26356"
+
+[node name="CharacterSelector" type="OptionButton" parent="BG/CenterContainer/VBoxContainer"]
+margin_top = 66.0
+margin_right = 200.0
+margin_bottom = 88.0
+theme = SubResource( 5 )
+custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = SubResource( 3 )
+custom_styles/pressed = SubResource( 4 )
+custom_styles/normal = ExtResource( 5 )
+text = "Select Character"
+
+[node name="HostBTN" type="Button" parent="BG/CenterContainer/VBoxContainer"]
+margin_top = 92.0
+margin_right = 200.0
+margin_bottom = 111.0
+mouse_default_cursor_shape = 2
+custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = SubResource( 3 )
+custom_styles/pressed = SubResource( 4 )
+custom_styles/normal = ExtResource( 5 )
+text = "Host"
