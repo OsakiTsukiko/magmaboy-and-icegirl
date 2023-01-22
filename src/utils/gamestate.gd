@@ -73,7 +73,8 @@ func _network_peer_disconnected(id: int) -> void:
 	print(id, " disconnected")
 
 func _server_disconnected() -> void:
-	pass
+	_network_peer_disconnected(1)
+	# might remove this in the future
 
 func _connection_failed() -> void:
 	print("connection failed")
