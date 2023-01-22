@@ -3,6 +3,7 @@ extends Node
 var main_menu_scene = load("res://src/ui/main_menu/MainMenu.tscn")
 var host_menu_scene = load("res://src/ui/host_menu/HostMenu.tscn")
 var lobby_scene = load("res://src/ui/lobby/Lobby.tscn")
+var waiting_lobby = load("res://src/ui/waiting_lobby/WaitingLobby.tscn")
 
 var game_port: int
 var game_ip: String
@@ -74,7 +75,7 @@ func _connection_failed() -> void:
 	print("connection failed")
 
 func _connected_to_server() -> void:
-	print("_connected_to_server")
+	get_tree().change_scene_to(waiting_lobby)
 
 # Networking
 
