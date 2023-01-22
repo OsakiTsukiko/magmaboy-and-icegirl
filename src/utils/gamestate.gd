@@ -10,10 +10,15 @@ var game_ip: String
 var character = null
 var username: String
 
+# Signals
+signal player_join_request_signal
+
 func _ready() -> void:
 	get_tree().connect("network_peer_connected", self, "_network_peer_connected")
 	get_tree().connect("network_peer_disconnected", self, "_network_peer_disconnected")
 	get_tree().connect("server_disconnected", self, "_server_disconnected")
+	get_tree().connect("connection_failed", self, "_connection_failed")
+	get_tree().connect("connected_to_server", self, "_connected_to_server")
 
 # connect to / make server
 
@@ -35,13 +40,49 @@ func init_client(username: String, game_ip: String, game_port: int) -> void:
 	peer.create_client(game_ip, game_port)
 	get_tree().network_peer = peer
 
+func reject_player_connect_req(id: int) -> void:
+	rpc_unreliable_id(id, "kick", "Request Rejected!")
+	# the following code is very shady... but its the only
+	# method i could think of.. i tried many..
+	# not even call_deferred could do the work
+	# it would seem like a timer is the only way
+	var kick_timer = Timer.new()
+	kick_timer.one_shot = true
+	kick_timer.wait_time = 0.1
+	kick_timer.autostart = true
+	kick_timer.connect("timeout", self, "_kick_timeout", [kick_timer, id])
+	self.add_child(kick_timer)
+
 # Network Signals
 
-func _network_peer_connected(id: int):
-	print(id, " connected")
+func _kick_timeout(node: Timer, id: int) -> void:
+	node.queue_free()
+	get_tree().network_peer.disconnect_peer(id)
 
-func _network_peer_disconnected(id: int):
+func _network_peer_connected(id: int) -> void:
+	print(id, " connected")
+	if (is_network_master()):
+		rpc_id(id, "request_username")
+
+func _network_peer_disconnected(id: int) -> void:
 	print(id, " disconnected")
 
-func _server_disconnected():
+func _server_disconnected() -> void:
 	pass
+
+func _connection_failed() -> void:
+	print("connection failed")
+
+func _connected_to_server() -> void:
+	print("_connected_to_server")
+
+# Networking
+
+puppetsync func kick(reason: String):
+	print("GOT KICKED", " reason: ", reason)
+
+puppetsync func request_username() -> void:
+	rpc_id(1, "respond_username_request", username)
+
+mastersync func respond_username_request(username: String) -> void:
+	call_deferred("emit_signal", "player_join_request_signal", username, get_tree().get_rpc_sender_id())
