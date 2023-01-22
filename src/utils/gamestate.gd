@@ -4,6 +4,7 @@ var main_menu_scene = load("res://src/ui/main_menu/MainMenu.tscn")
 var host_menu_scene = load("res://src/ui/host_menu/HostMenu.tscn")
 var lobby_scene = load("res://src/ui/lobby/Lobby.tscn")
 var waiting_lobby = load("res://src/ui/waiting_lobby/WaitingLobby.tscn")
+var kicked_menu = load("res://src/ui/kicked_menu/KickedMenu.tscn")
 
 var game_port: int
 var game_ip: String
@@ -13,6 +14,7 @@ var username: String
 
 # Signals
 signal player_join_request_signal
+signal kicked_reason_signal
 
 func _ready() -> void:
 	get_tree().connect("network_peer_connected", self, "_network_peer_connected")
@@ -80,7 +82,9 @@ func _connected_to_server() -> void:
 # Networking
 
 puppetsync func kick(reason: String):
-	print("GOT KICKED", " reason: ", reason)
+	get_tree().network_peer = null
+	get_tree().change_scene_to(kicked_menu)
+	call_deferred("emit_signal", "kicked_reason_signal", reason)
 
 puppetsync func request_username() -> void:
 	rpc_id(1, "respond_username_request", username)
