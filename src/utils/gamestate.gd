@@ -60,7 +60,9 @@ func reject_player_connect_req(id: int) -> void:
 
 func _kick_timeout(node: Timer, id: int) -> void:
 	node.queue_free()
-	get_tree().network_peer.disconnect_peer(id)
+	for peer in get_tree().get_network_connected_peers():
+		if peer == id:
+			get_tree().network_peer.disconnect_peer(id)
 
 func _network_peer_connected(id: int) -> void:
 	print(id, " connected")

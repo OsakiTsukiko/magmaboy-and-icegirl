@@ -30,6 +30,8 @@ func _player_join_request_signal(username: String, id: int) -> void:
 
 func _on_ANPRejectBTN_pressed() -> void:
 	Gamestate.reject_player_connect_req(req_player.id)
+	accept_new_player_dialog.visible = false
+	waiting_for_rtl.visible = true
 
 func _on_ANPAcceptBTN_pressed() -> void:
 	pass # Replace with function body.
