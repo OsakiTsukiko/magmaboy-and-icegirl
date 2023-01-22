@@ -6,6 +6,7 @@ var game_ip: String
 func _ready() -> void:
 	get_tree().connect("network_peer_connected", self, "_network_peer_connected")
 	get_tree().connect("network_peer_disconnected", self, "_network_peer_disconnected")
+	get_tree().connect("server_disconnected", self, "_server_disconnected")
 
 # connect to / make server
 
@@ -30,3 +31,6 @@ func _network_peer_connected(id: int):
 
 func _network_peer_disconnected(id: int):
 	print(id, " disconnected")
+
+func _server_disconnected():
+	pass
