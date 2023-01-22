@@ -115,4 +115,5 @@ expand = true
 stretch_mode = 5
 
 [connection signal="pressed" from="BG/CenterContainer/VBoxContainer/HostBTN" to="." method="_on_HostBTN_pressed"]
+[connection signal="pressed" from="BG/CenterContainer/VBoxContainer/ConnectBTN" to="." method="_on_ConnectBTN_pressed"]
 [connection signal="pressed" from="BG/CenterContainer/VBoxContainer/HBoxContainer/GithubBTN" to="." method="_on_GithubBTN_pressed"]
