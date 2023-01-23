@@ -24,14 +24,18 @@ func _physics_process(delta):
 		if direction.y == 0.0:
 			snap_vector = Vector2.DOWN * FLOOR_DETECT_DISTANCE
 		var is_on_platform = ray_cast.is_colliding()
-		linear_vel = move_and_slide_with_snap(
+#		linear_vel = move_and_slide_with_snap(
+#			linear_vel,
+#			snap_vector,
+#			FLOOR_NORMAL,
+#			!is_on_platform,
+#			4,
+#			0.9,
+#			false
+#		)
+		linear_vel = move_and_slide(
 			linear_vel,
-			snap_vector,
-			FLOOR_NORMAL,
-			!is_on_platform,
-			4,
-			0.9,
-			false
+			FLOOR_NORMAL
 		)
 		
 		if direction.x != 0:
