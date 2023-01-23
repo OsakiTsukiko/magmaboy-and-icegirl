@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "Entity2D",
 "language": "GDScript",
 "path": "res://src/utils/entity/entity.gd"
+}, {
+"base": "Node",
+"class": "Utils",
+"language": "GDScript",
+"path": "res://src/utils/utils.gd"
 } ]
 _global_script_class_icons={
-"Entity2D": ""
+"Entity2D": "",
+"Utils": ""
 }
 
 [application]

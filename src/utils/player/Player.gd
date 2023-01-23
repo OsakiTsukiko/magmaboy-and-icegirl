@@ -5,14 +5,14 @@ onready var ray_cast = $RayCast2D
 
 puppet var character: int = 0
 
-puppet func select_character(character: int):
+puppet func select_character(character: int) -> void:
 	pass
 
-puppet func update_location(pos: Vector2, vel: Vector2):
+puppet func update_location(pos: Vector2, vel: Vector2) -> void:
 	position = pos
 	linear_vel = vel
 
-func _physics_process(delta):
+func _physics_process(delta) -> void:
 #	if (is_network_master()):
 		# ^ weird method, should look more into it
 	if (true):
@@ -50,7 +50,7 @@ func _physics_process(delta):
 
 # UTILS
 
-func get_direction():
+func get_direction() -> Vector2:
 	return Vector2(
 		Input.get_action_strength("move_right") - Input.get_action_strength("move_left"),
 		-1 if is_on_floor() and Input.is_action_just_pressed("jump") else 0
@@ -61,7 +61,7 @@ func calculate_move_velocity (
 		direction,
 		speed,
 		is_jump_interrupted
-	):
+	) -> Vector2:
 	var velocity = linear_velocity
 	velocity.x = speed.x * direction.x
 	if direction.y != 0.0:

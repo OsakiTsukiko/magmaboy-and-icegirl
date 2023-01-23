@@ -6,6 +6,10 @@ var lobby_scene = load("res://src/ui/lobby/Lobby.tscn")
 var waiting_lobby = load("res://src/ui/waiting_lobby/WaitingLobby.tscn")
 var kicked_menu = load("res://src/ui/kicked_menu/KickedMenu.tscn")
 
+var levels: Array = [
+	Utils.Level.new("Temp", preload("res://src/levels/level_00/Level00.tscn"), preload("res://assets/levels/banners/level_00.png"))
+]
+
 var game_port: int
 var game_ip: String
 
@@ -84,7 +88,7 @@ func _connected_to_server() -> void:
 
 # Networking
 
-puppetsync func kick(reason: String):
+puppetsync func kick(reason: String) -> void:
 	get_tree().network_peer = null
 	get_tree().change_scene_to(kicked_menu)
 	call_deferred("emit_signal", "kicked_reason_signal", reason)
