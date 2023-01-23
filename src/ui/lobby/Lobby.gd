@@ -34,4 +34,4 @@ func _on_ANPRejectBTN_pressed() -> void:
 	waiting_for_rtl.visible = true
 
 func _on_ANPAcceptBTN_pressed() -> void:
-	pass # Replace with function body.
+	Gamestate.accept_player_connect_req(req_player.id)

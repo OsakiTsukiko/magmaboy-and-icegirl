@@ -5,6 +5,7 @@ var host_menu_scene = load("res://src/ui/host_menu/HostMenu.tscn")
 var lobby_scene = load("res://src/ui/lobby/Lobby.tscn")
 var waiting_lobby = load("res://src/ui/waiting_lobby/WaitingLobby.tscn")
 var kicked_menu = load("res://src/ui/kicked_menu/KickedMenu.tscn")
+var level_selector = load("res://src/ui/level_selector/LevelSelector.tscn")
 
 var levels: Array = [
 	Utils.Level.new("Temp", preload("res://src/levels/level_00/Level00.tscn"), preload("res://assets/levels/banners/level_00.png"))
@@ -61,6 +62,15 @@ func reject_player_connect_req(id: int) -> void:
 	kick_timer.connect("timeout", self, "_kick_timeout", [kick_timer, id])
 	self.add_child(kick_timer)
 
+func accept_player_connect_req(id: int) -> void:
+	var cid: int
+	if (character == 1):
+		cid = 0
+	if (character == 0):
+		cid = 1
+	rpc("accept_request", username, cid)
+	get_tree().change_scene_to(level_selector)
+
 # Network Signals
 
 func _kick_timeout(node: Timer, id: int) -> void:
@@ -89,6 +99,17 @@ func _connected_to_server() -> void:
 	call_deferred("emit_signal", "waiting_lobby_message_signal", "Waiting for Approval...")
 
 # Networking
+
+puppetsync func accept_request(username: String, character: int):
+	self.character = character
+	var wlm_string = "Waiting for "
+	if (character == 0):
+		wlm_string += "[color=#97f7e4]" + username + "[/color] "
+	if (character == 1):
+		wlm_string += "[color=#e66247]" + username + "[/color] "
+	wlm_string += "to select a level!"
+	get_tree().change_scene_to(waiting_lobby)
+	call_deferred("emit_signal", "waiting_lobby_message_signal", wlm_string)
 
 puppetsync func kick(reason: String) -> void:
 	get_tree().network_peer = null
