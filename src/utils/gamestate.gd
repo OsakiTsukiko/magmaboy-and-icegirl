@@ -19,6 +19,7 @@ var username: String
 # Signals
 signal player_join_request_signal
 signal kicked_reason_signal
+signal waiting_lobby_message_signal
 
 func _ready() -> void:
 	get_tree().connect("network_peer_connected", self, "_network_peer_connected")
@@ -85,6 +86,7 @@ func _connection_failed() -> void:
 
 func _connected_to_server() -> void:
 	get_tree().change_scene_to(waiting_lobby)
+	call_deferred("emit_signal", "waiting_lobby_message_signal", "Waiting for Approval...")
 
 # Networking
 
