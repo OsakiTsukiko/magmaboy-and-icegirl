@@ -81,11 +81,13 @@ func _kick_timeout(node: Timer, id: int) -> void:
 
 func _network_peer_connected(id: int) -> void:
 	print(id, " connected")
+	SyncManager.add_peer(id)
 	if (is_network_master()):
 		rpc_id(id, "request_username")
 
 func _network_peer_disconnected(id: int) -> void:
 	print(id, " disconnected")
+	SyncManager.remove_peer(id)
 
 func _server_disconnected() -> void:
 	_network_peer_disconnected(1)
