@@ -52,6 +52,7 @@ config/icon="res://icon.png"
 
 Gamestate="*res://src/utils/gamestate.gd"
 SyncManager="*res://addons/godot-rollback-netcode/SyncManager.gd"
+SyncDebugger="*res://addons/godot-rollback-netcode/SyncDebugger.gd"
 
 [display]
 

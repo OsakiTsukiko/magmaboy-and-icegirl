@@ -28,6 +28,11 @@ func _ready() -> void:
 	get_tree().connect("server_disconnected", self, "_server_disconnected")
 	get_tree().connect("connection_failed", self, "_connection_failed")
 	get_tree().connect("connected_to_server", self, "_connected_to_server")
+	SyncManager.connect("sync_started", self, "_sync_started")
+	SyncManager.connect("sync_stopped", self, "_sync_stopped")
+	SyncManager.connect("sync_lost", self, "_sync_lost")
+	SyncManager.connect("sync_regained", self, "_sync_regained")
+	SyncManager.connect("sync_error", self, "_sync_error")
 
 # connect to / make server
 
@@ -71,6 +76,11 @@ func accept_player_connect_req(id: int) -> void:
 	rpc("accept_request", username, cid)
 	get_tree().change_scene_to(level_selector)
 
+func start_level(level_id: int) -> void:
+	print("Starting Level ", level_id)
+	SyncManager.start()
+	# continue in sync start signal
+
 # Network Signals
 
 func _kick_timeout(node: Timer, id: int) -> void:
@@ -92,6 +102,7 @@ func _network_peer_disconnected(id: int) -> void:
 func _server_disconnected() -> void:
 	_network_peer_disconnected(1)
 	# might remove this in the future
+	# also Stop SyncManager and stuff... idk
 
 func _connection_failed() -> void:
 	print("connection failed")
@@ -99,6 +110,24 @@ func _connection_failed() -> void:
 func _connected_to_server() -> void:
 	get_tree().change_scene_to(waiting_lobby)
 	call_deferred("emit_signal", "waiting_lobby_message_signal", "Waiting for Approval...")
+
+func _sync_started() -> void:
+	print("Sync Started")
+
+func _sync_stopped() -> void:
+	print("Sync Stoped")
+	
+func _sync_lost() -> void:
+	print("Sync Lost")
+
+func _sync_regained() -> void:
+	print("Sync Regained")
+
+func _sync_error(msg: String) -> void:
+	print("Sync Error: ", msg)
+	# TODO: disconnect peer
+	# clear sync peers
+	# change scene
 
 # Networking
 

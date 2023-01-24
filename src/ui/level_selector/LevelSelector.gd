@@ -18,4 +18,4 @@ func _ready() -> void:
 		)
 
 func _select_btn(level_id: int) -> void:
-	print(level_id)
+	Gamestate.start_level(level_id)
