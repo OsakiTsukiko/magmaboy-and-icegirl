@@ -83,6 +83,7 @@ func accept_player_connect_req(id: int) -> void:
 
 func start_level(level_id: int) -> void:
 	print("Starting Level ", level_id)
+	rpc("start_level_bc", level_id)
 	SyncManager.start()
 	# continue in sync start signal
 
@@ -103,6 +104,16 @@ func _network_peer_connected(id: int) -> void:
 func _network_peer_disconnected(id: int) -> void:
 	print(id, " disconnected")
 	SyncManager.remove_peer(id)
+	SyncManager.stop()
+	if (get_tree().is_network_server()):
+		get_tree().change_scene_to(lobby_scene)
+	else:
+#		get_tree().network_peer = null
+#		E 0:00:40.419   ~Object: Object [Object:2326] was freed or unreferenced while a signal is being emitted from it. Try connecting to the signal using 'CONNECT_DEFERRED' flag, or use queue_free() to free the object (if this object is a Node) to avoid this error and potential crashes.
+#			<C++ Source>  core/object.cpp:1964 @ ~Object()
+#			<Stack Trace> gamestate.gd:111 @ _network_peer_disconnected()
+#			gamestate.gd:115 @ _server_disconnected()
+		get_tree().change_scene_to(main_menu_scene)
 
 func _server_disconnected() -> void:
 	_network_peer_disconnected(1)
@@ -131,11 +142,15 @@ func _sync_regained() -> void:
 
 func _sync_error(msg: String) -> void:
 	print("Sync Error: ", msg)
-	# TODO: disconnect peer
-	# clear sync peers
-	# change scene
+	get_tree().network_peer = null
+	SyncManager.clear_peers()
+	get_tree().change_scene_to(main_menu_scene)
 
 # Networking
+
+remotesync func start_level_bc(level_id: int):
+	if (get_tree().get_rpc_sender_id() == 1):
+		get_tree().change_scene_to(levels[level_id])
 
 puppetsync func accept_request(username: String, character: int):
 	self.character = character
