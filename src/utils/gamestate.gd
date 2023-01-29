@@ -30,6 +30,7 @@ func _ready() -> void:
 	get_tree().connect("server_disconnected", self, "_server_disconnected")
 	get_tree().connect("connection_failed", self, "_connection_failed")
 	get_tree().connect("connected_to_server", self, "_connected_to_server")
+	
 	SyncManager.connect("sync_started", self, "_sync_started")
 	SyncManager.connect("sync_stopped", self, "_sync_stopped")
 	SyncManager.connect("sync_lost", self, "_sync_lost")
@@ -148,7 +149,8 @@ puppetsync func accept_request(username: String, character: int):
 	call_deferred("emit_signal", "waiting_lobby_message_signal", wlm_string)
 
 puppetsync func kick(reason: String) -> void:
-	get_tree().network_peer = null
+#	get_tree().network_peer = null
+#	using this doesnt trigger server disconnected signal
 	get_tree().change_scene_to(kicked_menu)
 	call_deferred("emit_signal", "kicked_reason_signal", reason)
 
