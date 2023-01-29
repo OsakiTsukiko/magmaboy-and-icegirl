@@ -1,6 +1,8 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://assets/levels/temp/tileset.png" type="Texture" id=1]
+[ext_resource path="res://src/utils/network_player/NetworkPlayer.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/utils/level/Level.gd" type="Script" id=3]
 
 [sub_resource type="TileSet" id=1]
 0/name = "tileset.png 0"
@@ -41,6 +43,7 @@ extents_x = 5701632
 extents_y = 4784128
 
 [node name="Level00" type="Node2D"]
+script = ExtResource( 3 )
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource( 1 )
@@ -73,3 +76,13 @@ position = Vector2( 439, 185 )
 fixed_position_x = 28770304
 fixed_position_y = 12124160
 shape = SubResource( 5 )
+
+[node name="ServerNP" parent="." instance=ExtResource( 2 )]
+position = Vector2( 93, 184 )
+fixed_position_x = 6094848
+fixed_position_y = 12058624
+
+[node name="ClientNP" parent="." instance=ExtResource( 2 )]
+position = Vector2( 131, 183 )
+fixed_position_x = 8585216
+fixed_position_y = 11993088

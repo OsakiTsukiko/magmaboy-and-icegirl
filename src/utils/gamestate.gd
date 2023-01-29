@@ -8,6 +8,9 @@ var waiting_lobby = load("res://src/ui/waiting_lobby/WaitingLobby.tscn")
 var kicked_menu = load("res://src/ui/kicked_menu/KickedMenu.tscn")
 var level_selector = load("res://src/ui/level_selector/LevelSelector.tscn")
 
+const LOG_FILE_DIR: String = "user://logs"
+var logging_enabled: bool = true
+
 var levels: Array = [
 	Utils.Level.new("Temp", preload("res://src/levels/level_00/Level00.tscn"), preload("res://assets/levels/banners/level_00.png"))
 ]
@@ -130,9 +133,29 @@ func _connected_to_server() -> void:
 
 func _sync_started() -> void:
 	print("Sync Started")
+	
+	if logging_enabled:
+		var dir = Directory.new()
+		if !dir.dir_exists(LOG_FILE_DIR):
+			dir.make_dir_recursive(LOG_FILE_DIR)
+		
+		var datetime = OS.get_datetime(true)
+		var log_file_name = "%04d%02d%02d-%02d%02d%02d-peer-%d.log" % [
+			datetime['year'],
+			datetime['month'],
+			datetime['day'],
+			datetime['hour'],
+			datetime['minute'],
+			datetime['second'],
+			get_tree().get_network_unique_id(),
+		]
+		
+		SyncManager.start_logging(LOG_FILE_DIR + "/" + log_file_name)
 
 func _sync_stopped() -> void:
 	print("Sync Stoped")
+	if logging_enabled:
+		SyncManager.stop_logging()
 	
 func _sync_lost() -> void:
 	print("Sync Lost")
@@ -150,7 +173,7 @@ func _sync_error(msg: String) -> void:
 
 remotesync func start_level_bc(level_id: int):
 	if (get_tree().get_rpc_sender_id() == 1):
-		get_tree().change_scene_to(levels[level_id])
+		get_tree().change_scene_to(levels[level_id].scene)
 
 puppetsync func accept_request(username: String, character: int):
 	self.character = character
