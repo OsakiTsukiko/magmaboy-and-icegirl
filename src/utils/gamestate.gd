@@ -1,6 +1,7 @@
 extends Node
 
 var main_menu_scene = load("res://src/ui/main_menu/MainMenu.tscn")
+var connect_menu_scene = load("res://src/ui/connect_menu/ConnectMenu.tscn")
 var host_menu_scene = load("res://src/ui/host_menu/HostMenu.tscn")
 var lobby_scene = load("res://src/ui/lobby/Lobby.tscn")
 var waiting_lobby = load("res://src/ui/waiting_lobby/WaitingLobby.tscn")
@@ -21,6 +22,7 @@ var username: String
 signal player_join_request_signal
 signal kicked_reason_signal
 signal waiting_lobby_message_signal
+signal connect_error_scene_signal
 
 func _ready() -> void:
 	get_tree().connect("network_peer_connected", self, "_network_peer_connected")
@@ -47,6 +49,8 @@ func init_server(username: String, character: int, game_port: int) -> void:
 	get_tree().change_scene_to(lobby_scene)
 
 func init_client(username: String, game_ip: String, game_port: int) -> void:
+	get_tree().change_scene_to(waiting_lobby)
+	call_deferred("emit_signal", "waiting_lobby_message_signal", "Connecting to Host...")
 	self.game_ip = game_ip
 	self.game_port = game_port
 	self.username = username
@@ -105,7 +109,8 @@ func _server_disconnected() -> void:
 	# also Stop SyncManager and stuff... idk
 
 func _connection_failed() -> void:
-	print("connection failed")
+	get_tree().change_scene_to(connect_menu_scene)
+	call_deferred("emit_signal", "connect_error_scene_signal", "Connection Failed!")
 
 func _connected_to_server() -> void:
 	get_tree().change_scene_to(waiting_lobby)

@@ -2,6 +2,7 @@ extends Control
 
 var main_menu_scene = load("res://src/ui/main_menu/MainMenu.tscn")
 
+onready var back_btn = $BG/BackBTN
 onready var host_btn = $BG/CenterContainer/VBoxContainer/HostBTN
 onready var character_selector_input = $BG/CenterContainer/VBoxContainer/CharacterSelector
 onready var error_label = $BG/CenterContainer/VBoxContainer/ErrorLabel
@@ -20,10 +21,12 @@ func _on_HostBTN_pressed() -> void:
 	var port: int = int(port_input.text)
 	
 	host_btn.disabled = true
+	back_btn.disabled = true
 	
 	if (username.replace(" ", "") == ""):
 		show_error("Invalid username!")
 		host_btn.disabled = false
+		back_btn.disabled = false
 		return
 	
 	Gamestate.init_server(
