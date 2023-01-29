@@ -75,6 +75,10 @@ func accept_player_connect_req(id: int) -> void:
 	rpc("accept_request", username, cid)
 	get_tree().change_scene_to(level_selector)
 
+func start_level(level_id: int) -> void:
+	print("Starting Level ", level_id)
+	rpc("start_level_bc", level_id)
+
 # Network Signals
 
 func _kick_timeout(node: Timer, id: int) -> void:
@@ -90,10 +94,13 @@ func _network_peer_connected(id: int) -> void:
 
 func _network_peer_disconnected(id: int) -> void:
 	print(id, " disconnected")
+	if (get_tree().is_network_server()):
+		get_tree().change_scene_to(lobby_scene)
+	else: 
+		get_tree().change_scene_to(main_menu_scene)
 
 func _server_disconnected() -> void:
 	_network_peer_disconnected(1)
-	# might remove this in the future
 
 func _connection_failed() -> void:
 	get_tree().change_scene_to(connect_menu_scene)
@@ -105,7 +112,11 @@ func _connected_to_server() -> void:
 
 # Networking
 
-puppetsync func accept_request(username: String, character: int):
+remotesync func start_level_bc(level_id: int) -> void:
+	if (get_tree().get_rpc_sender_id() == 1):
+		get_tree().change_scene_to(levels[level_id].scene)
+
+puppetsync func accept_request(username: String, character: int) -> void:
 	self.character = character
 	var wlm_string = "Waiting for "
 	if (character == 0):
