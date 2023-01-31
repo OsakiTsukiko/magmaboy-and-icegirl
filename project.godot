@@ -27,7 +27,13 @@ _global_script_class_icons={
 [application]
 
 config/name="MagmaBoy & IceGirl"
+config/description="Multiplayer Two Player Platformer"
 run/main_scene="res://src/ui/main_menu/MainMenu.tscn"
+config/use_custom_user_dir=true
+config/custom_user_dir_name="magmaboy_and_icegirl"
+boot_splash/show_image=false
+boot_splash/fullsize=false
+boot_splash/use_filter=false
 config/icon="res://icon.png"
 
 [autoload]
