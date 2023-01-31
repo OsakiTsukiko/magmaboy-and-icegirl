@@ -1,8 +1,8 @@
 extends Control
 
-onready var waiting_for_rtl = $BG/CenterContainer/WaitingForRTL
-onready var accept_new_player_dialog = $BG/CenterContainer/AcceptNewPlayerDialog
-onready var anp_request_label = $BG/CenterContainer/AcceptNewPlayerDialog/RequestLabel
+onready var waiting_for_rtl: Node = $BG/CenterContainer/WaitingForRTL
+onready var accept_new_player_dialog: Node = $BG/CenterContainer/AcceptNewPlayerDialog
+onready var anp_request_label: Node = $BG/CenterContainer/AcceptNewPlayerDialog/RequestLabel
 
 var req_player: Dictionary = {
 	"username": null,

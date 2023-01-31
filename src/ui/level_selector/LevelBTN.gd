@@ -1,7 +1,7 @@
 extends Panel
 
-onready var level_btn = $MarginContainer/LevelBTN
-onready var title = $Title
+onready var level_btn: Node = $MarginContainer/LevelBTN
+onready var title: Node = $Title
 
 func init(
 	title: String,

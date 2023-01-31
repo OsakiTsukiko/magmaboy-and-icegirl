@@ -2,12 +2,12 @@ extends Control
 
 var main_menu_scene = load("res://src/ui/main_menu/MainMenu.tscn")
 
-onready var back_btn = $BG/BackBTN
-onready var connect_btn = $BG/CenterContainer/VBoxContainer/ConnectBTN
-onready var error_label = $BG/CenterContainer/VBoxContainer/ErrorLabel
-onready var username_input = $BG/CenterContainer/VBoxContainer/GridContainer/Username
-onready var ip_input = $BG/CenterContainer/VBoxContainer/GridContainer/IP
-onready var port_input = $BG/CenterContainer/VBoxContainer/GridContainer/Port
+onready var back_btn: Node = $BG/BackBTN
+onready var connect_btn: Node = $BG/CenterContainer/VBoxContainer/ConnectBTN
+onready var error_label: Node = $BG/CenterContainer/VBoxContainer/ErrorLabel
+onready var username_input: Node = $BG/CenterContainer/VBoxContainer/GridContainer/Username
+onready var ip_input: Node = $BG/CenterContainer/VBoxContainer/GridContainer/IP
+onready var port_input: Node = $BG/CenterContainer/VBoxContainer/GridContainer/Port
 
 func _ready():
 	Gamestate.connect("connect_error_scene_signal", self, "show_error")

@@ -1,8 +1,8 @@
 extends Control
 
-var main_menu_scene = load("res://src/ui/main_menu/MainMenu.tscn")
+var main_menu_scene: Resource = load("res://src/ui/main_menu/MainMenu.tscn")
 
-onready var reason_label = $BG/CenterContainer/VBoxContainer/ReasonLabel
+onready var reason_label: Node = $BG/CenterContainer/VBoxContainer/ReasonLabel
 
 func _ready() -> void:
 	Gamestate.connect("kicked_reason_signal", self, "_kicked_reason_signal")

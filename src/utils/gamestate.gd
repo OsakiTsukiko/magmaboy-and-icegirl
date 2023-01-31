@@ -1,12 +1,12 @@
 extends Node
 
-var main_menu_scene = load("res://src/ui/main_menu/MainMenu.tscn")
-var connect_menu_scene = load("res://src/ui/connect_menu/ConnectMenu.tscn")
-var host_menu_scene = load("res://src/ui/host_menu/HostMenu.tscn")
-var lobby_scene = load("res://src/ui/lobby/Lobby.tscn")
-var waiting_lobby = load("res://src/ui/waiting_lobby/WaitingLobby.tscn")
-var kicked_menu = load("res://src/ui/kicked_menu/KickedMenu.tscn")
-var level_selector = load("res://src/ui/level_selector/LevelSelector.tscn")
+var main_menu_scene: Resource = load("res://src/ui/main_menu/MainMenu.tscn")
+var connect_menu_scene: Resource = load("res://src/ui/connect_menu/ConnectMenu.tscn")
+var host_menu_scene: Resource = load("res://src/ui/host_menu/HostMenu.tscn")
+var lobby_scene: Resource = load("res://src/ui/lobby/Lobby.tscn")
+var waiting_lobby: Resource = load("res://src/ui/waiting_lobby/WaitingLobby.tscn")
+var kicked_menu: Resource = load("res://src/ui/kicked_menu/KickedMenu.tscn")
+var level_selector: Resource = load("res://src/ui/level_selector/LevelSelector.tscn")
 
 var levels: Array = [
 	Utils.Level.new("Temp", preload("res://src/levels/level_00/Level00.tscn"), preload("res://assets/levels/banners/level_00.png"))

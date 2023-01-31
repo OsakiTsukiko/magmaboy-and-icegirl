@@ -1,6 +1,6 @@
 extends Control
 
-onready var title = $BG/CenterContainer/Title
+onready var title: Node = $BG/CenterContainer/Title
 
 func _ready():
 	load_title("Waiting")

@@ -1,7 +1,7 @@
 extends Control
 
-var host_menu_scene = load("res://src/ui/host_menu/HostMenu.tscn")
-var connect_menu_scene = load("res://src/ui/connect_menu/ConnectMenu.tscn")
+var host_menu_scene: Resource = load("res://src/ui/host_menu/HostMenu.tscn")
+var connect_menu_scene: Resource = load("res://src/ui/connect_menu/ConnectMenu.tscn")
 
 func _on_GithubBTN_pressed() -> void:
 	if (ProjectSettings.has_setting("info/github_url")):

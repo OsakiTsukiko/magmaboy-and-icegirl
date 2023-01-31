@@ -1,13 +1,13 @@
 extends Control
 
-var main_menu_scene = load("res://src/ui/main_menu/MainMenu.tscn")
+var main_menu_scene: Resource = load("res://src/ui/main_menu/MainMenu.tscn")
 
-onready var back_btn = $BG/BackBTN
-onready var host_btn = $BG/CenterContainer/VBoxContainer/HostBTN
-onready var character_selector_input = $BG/CenterContainer/VBoxContainer/CharacterSelector
-onready var error_label = $BG/CenterContainer/VBoxContainer/ErrorLabel
-onready var username_input = $BG/CenterContainer/VBoxContainer/GridContainer/Username
-onready var port_input = $BG/CenterContainer/VBoxContainer/GridContainer/Port
+onready var back_btn: Node = $BG/BackBTN
+onready var host_btn: Node = $BG/CenterContainer/VBoxContainer/HostBTN
+onready var character_selector_input: Node = $BG/CenterContainer/VBoxContainer/CharacterSelector
+onready var error_label: Node = $BG/CenterContainer/VBoxContainer/ErrorLabel
+onready var username_input: Node = $BG/CenterContainer/VBoxContainer/GridContainer/Username
+onready var port_input: Node = $BG/CenterContainer/VBoxContainer/GridContainer/Port
 
 func _ready() -> void:
 	character_selector_input.add_item("Magma Boy")
