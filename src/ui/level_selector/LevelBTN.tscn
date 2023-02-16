@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://src/ui/level_selector/LevelBTN.gd" type="Script" id=1]
-[ext_resource path="res://assets/ui/host_menu/df/label_font.tres" type="DynamicFont" id=2]
+[ext_resource path="res://assets/ui/menu/label/font.tres" type="DynamicFont" id=2]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.0784314, 0.0784314, 0.0784314, 1 )
@@ -13,23 +13,23 @@ corner_radius_bottom_left = 2
 [node name="LevelBTN" type="Panel"]
 margin_right = 40.0
 margin_bottom = 40.0
-rect_min_size = Vector2( 100, 50 )
+rect_min_size = Vector2( 210, 110 )
 custom_styles/panel = SubResource( 1 )
 script = ExtResource( 1 )
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_constants/margin_right = 2
-custom_constants/margin_top = 2
-custom_constants/margin_left = 2
-custom_constants/margin_bottom = 2
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
 
 [node name="LevelBTN" type="TextureButton" parent="MarginContainer"]
-margin_left = 2.0
-margin_top = 2.0
-margin_right = 98.0
-margin_bottom = 48.0
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 205.0
+margin_bottom = 105.0
 mouse_default_cursor_shape = 2
 expand = true
 stretch_mode = 6

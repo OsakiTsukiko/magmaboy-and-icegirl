@@ -5,6 +5,10 @@ onready var network_tick_timer = $NetworkTick
 var in_match: bool
 var tick: int = 0
 
+func _process(delta):
+	if (Input.is_action_just_pressed("nlm_debug")):
+		pass
+
 func start_sync():
 	if (get_tree().is_network_server()):
 		var current_unix_time: int = OS.get_unix_time()

@@ -1,30 +1,21 @@
 [gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://assets/ui/main_menu/bg/bg_panel.tres" type="StyleBox" id=1]
-[ext_resource path="res://assets/fonts/Monocraft.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://assets/fonts/PressStart2P.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://assets/ui/menu/title/font.tres" type="DynamicFont" id=2]
+[ext_resource path="res://assets/ui/menu/text_input/style_normal.tres" type="StyleBox" id=3]
 [ext_resource path="res://assets/ui/host_menu/df/label_font.tres" type="DynamicFont" id=4]
-[ext_resource path="res://assets/ui/host_menu/line_edit.tres" type="StyleBox" id=5]
-[ext_resource path="res://assets/ui/host_menu/button/button_pressed.tres" type="StyleBox" id=6]
-[ext_resource path="res://assets/ui/host_menu/button/button_hover.tres" type="StyleBox" id=7]
-[ext_resource path="res://assets/ui/host_menu/button/button_normal.tres" type="StyleBox" id=8]
+[ext_resource path="res://assets/ui/menu/button/style_disabled.tres" type="StyleBox" id=5]
+[ext_resource path="res://assets/ui/menu/text_input/font.tres" type="DynamicFont" id=6]
+[ext_resource path="res://assets/ui/menu/button/style_pressed.tres" type="StyleBox" id=7]
+[ext_resource path="res://assets/ui/menu/button/style_normal.tres" type="StyleBox" id=8]
 [ext_resource path="res://src/ui/connect_menu/ConnectMenu.gd" type="Script" id=9]
-
-[sub_resource type="DynamicFont" id=1]
-font_data = ExtResource( 3 )
-
-[sub_resource type="DynamicFont" id=2]
-size = 9
-font_data = ExtResource( 2 )
-
-[sub_resource type="DynamicFont" id=3]
-size = 9
-font_data = ExtResource( 2 )
+[ext_resource path="res://assets/ui/menu/button/font.tres" type="DynamicFont" id=10]
+[ext_resource path="res://assets/ui/menu/label/font.tres" type="DynamicFont" id=11]
+[ext_resource path="res://assets/ui/menu/button/style_hover.tres" type="StyleBox" id=12]
 
 [node name="ConnectMenu" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-rect_pivot_offset = Vector2( 184, 196 )
 script = ExtResource( 9 )
 
 [node name="BG" type="Panel" parent="."]
@@ -37,105 +28,108 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="BG/CenterContainer"]
-margin_left = 156.0
-margin_top = 70.0
-margin_right = 356.0
-margin_bottom = 229.0
-rect_min_size = Vector2( 200, 0 )
+margin_left = 262.0
+margin_top = 127.0
+margin_right = 762.0
+margin_bottom = 472.0
+rect_min_size = Vector2( 500, 0 )
 rect_pivot_offset = Vector2( -675, -221 )
+custom_constants/separation = 10
 
 [node name="Padding00" type="Control" parent="BG/CenterContainer/VBoxContainer"]
-margin_right = 200.0
+margin_right = 500.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 0, 20 )
 
 [node name="Title" type="Label" parent="BG/CenterContainer/VBoxContainer"]
-margin_top = 24.0
-margin_right = 200.0
-margin_bottom = 40.0
-custom_fonts/font = SubResource( 1 )
+margin_top = 30.0
+margin_right = 500.0
+margin_bottom = 70.0
+custom_fonts/font = ExtResource( 2 )
 text = "Join Game"
 align = 1
 valign = 1
 
 [node name="GridContainer" type="GridContainer" parent="BG/CenterContainer/VBoxContainer"]
-margin_top = 44.0
-margin_right = 200.0
-margin_bottom = 109.0
+margin_top = 80.0
+margin_right = 500.0
+margin_bottom = 235.0
+custom_constants/vseparation = 10
+custom_constants/hseparation = 20
 columns = 2
 
 [node name="ULabel" type="Label" parent="BG/CenterContainer/VBoxContainer/GridContainer"]
-margin_top = 5.0
-margin_right = 48.0
-margin_bottom = 14.0
-custom_fonts/font = ExtResource( 4 )
+margin_top = 10.0
+margin_right = 128.0
+margin_bottom = 35.0
+custom_fonts/font = ExtResource( 11 )
 text = "Username"
 
 [node name="Username" type="LineEdit" parent="BG/CenterContainer/VBoxContainer/GridContainer"]
-margin_left = 52.0
-margin_right = 200.0
-margin_bottom = 19.0
+margin_left = 148.0
+margin_right = 500.0
+margin_bottom = 45.0
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 2 )
-custom_styles/normal = ExtResource( 5 )
+custom_fonts/font = ExtResource( 6 )
+custom_styles/normal = ExtResource( 3 )
 placeholder_text = "Godette"
 
 [node name="IPLabel" type="Label" parent="BG/CenterContainer/VBoxContainer/GridContainer"]
-margin_top = 28.0
-margin_right = 48.0
-margin_bottom = 37.0
-custom_fonts/font = ExtResource( 4 )
+margin_top = 65.0
+margin_right = 128.0
+margin_bottom = 90.0
+custom_fonts/font = ExtResource( 11 )
 text = "IP"
 
 [node name="IP" type="LineEdit" parent="BG/CenterContainer/VBoxContainer/GridContainer"]
-margin_left = 52.0
-margin_top = 23.0
-margin_right = 200.0
-margin_bottom = 42.0
-custom_fonts/font = ExtResource( 4 )
-custom_styles/normal = ExtResource( 5 )
+margin_left = 148.0
+margin_top = 55.0
+margin_right = 500.0
+margin_bottom = 100.0
+custom_fonts/font = ExtResource( 6 )
+custom_styles/normal = ExtResource( 3 )
 text = "localhost"
 placeholder_text = "localhost"
 
 [node name="PLabel" type="Label" parent="BG/CenterContainer/VBoxContainer/GridContainer"]
-margin_top = 51.0
-margin_right = 48.0
-margin_bottom = 60.0
-custom_fonts/font = ExtResource( 4 )
+margin_top = 120.0
+margin_right = 128.0
+margin_bottom = 145.0
+custom_fonts/font = ExtResource( 11 )
 text = "Port"
 
 [node name="Port" type="LineEdit" parent="BG/CenterContainer/VBoxContainer/GridContainer"]
-margin_left = 52.0
-margin_top = 46.0
-margin_right = 200.0
-margin_bottom = 65.0
-custom_fonts/font = ExtResource( 4 )
-custom_styles/normal = ExtResource( 5 )
+margin_left = 148.0
+margin_top = 110.0
+margin_right = 500.0
+margin_bottom = 155.0
+custom_fonts/font = ExtResource( 6 )
+custom_styles/normal = ExtResource( 3 )
 text = "25565"
 placeholder_text = "25565"
 
 [node name="ConnectBTN" type="Button" parent="BG/CenterContainer/VBoxContainer"]
-margin_top = 113.0
-margin_right = 200.0
-margin_bottom = 132.0
+margin_top = 245.0
+margin_right = 500.0
+margin_bottom = 290.0
 mouse_default_cursor_shape = 2
-custom_fonts/font = ExtResource( 4 )
-custom_styles/hover = ExtResource( 7 )
-custom_styles/pressed = ExtResource( 6 )
-custom_styles/disabled = ExtResource( 6 )
+custom_fonts/font = ExtResource( 10 )
+custom_styles/hover = ExtResource( 12 )
+custom_styles/pressed = ExtResource( 7 )
+custom_styles/disabled = ExtResource( 5 )
 custom_styles/normal = ExtResource( 8 )
 text = "Connect"
 
 [node name="Padding01" type="Control" parent="BG/CenterContainer/VBoxContainer"]
-margin_top = 136.0
-margin_right = 200.0
-margin_bottom = 146.0
+margin_top = 300.0
+margin_right = 500.0
+margin_bottom = 310.0
 rect_min_size = Vector2( 0, 10 )
 
 [node name="ErrorLabel" type="Label" parent="BG/CenterContainer/VBoxContainer"]
-margin_top = 150.0
-margin_right = 200.0
-margin_bottom = 159.0
+margin_top = 320.0
+margin_right = 500.0
+margin_bottom = 345.0
 custom_colors/font_color = Color( 1, 0.407843, 0.407843, 1 )
 custom_fonts/font = ExtResource( 4 )
 align = 1
@@ -144,14 +138,15 @@ autowrap = true
 [node name="BackBTN" type="Button" parent="BG"]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -44.0
+margin_left = -94.0
 margin_top = 10.0
 margin_right = -10.0
-margin_bottom = 29.0
+margin_bottom = 55.0
 mouse_default_cursor_shape = 2
-custom_fonts/font = SubResource( 3 )
-custom_styles/hover = ExtResource( 7 )
-custom_styles/pressed = ExtResource( 6 )
+custom_fonts/font = ExtResource( 10 )
+custom_styles/hover = ExtResource( 12 )
+custom_styles/pressed = ExtResource( 7 )
+custom_styles/disabled = ExtResource( 5 )
 custom_styles/normal = ExtResource( 8 )
 text = "Back"
 

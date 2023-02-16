@@ -2,7 +2,7 @@ extends Control
 
 var level_btn_scene: Resource = load("res://src/ui/level_selector/LevelBTN.tscn")
 
-onready var level_cont: Node = $BG/VBoxContainer/CenterContainer/ScrollContainer/LevelCont
+onready var level_cont: Node = $BG/VBoxContainer/CenterContainer/Panel/MarginContainer/ScrollContainer/LevelCont
 
 func _ready() -> void:
 	for i in Gamestate.levels.size():
