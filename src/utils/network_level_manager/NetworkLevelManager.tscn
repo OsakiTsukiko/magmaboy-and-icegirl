@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://src/utils/network_level_manager/NetworkLevelManager.gd" type="Script" id=1]
 [ext_resource path="res://assets/ui/menu/title/font.tres" type="DynamicFont" id=2]
+[ext_resource path="res://assets/ui/menu/label/font.tres" type="DynamicFont" id=3]
 
 [node name="NetworkLevelManager" type="Node"]
 script = ExtResource( 1 )
@@ -28,10 +29,17 @@ margin_right = 1014.0
 margin_bottom = 590.0
 mouse_filter = 2
 
-[node name="SyncLabel" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+[node name="INFO" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer"]
 margin_right = 1004.0
-margin_bottom = 40.0
-custom_colors/font_color = Color( 0.501961, 1, 0, 1 )
+margin_bottom = 25.0
+custom_fonts/font = ExtResource( 3 )
+text = "Network Level Manager DBG Screen"
+
+[node name="SyncLabel" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+margin_top = 29.0
+margin_right = 1004.0
+margin_bottom = 69.0
+custom_colors/font_color = Color( 1, 0.164706, 0, 1 )
 custom_fonts/font = ExtResource( 2 )
 autowrap = true
 
