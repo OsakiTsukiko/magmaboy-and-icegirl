@@ -39,6 +39,7 @@ config/icon="res://icon.png"
 [autoload]
 
 Gamestate="*res://src/utils/gamestate.gd"
+NetworkLevelManager="*res://src/utils/network_level_manager/NetworkLevelManager.tscn"
 
 [debug]
 

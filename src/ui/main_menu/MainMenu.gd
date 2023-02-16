@@ -12,4 +12,3 @@ func _on_HostBTN_pressed() -> void:
 
 func _on_ConnectBTN_pressed() -> void:
 	get_tree().change_scene_to(connect_menu_scene)
-

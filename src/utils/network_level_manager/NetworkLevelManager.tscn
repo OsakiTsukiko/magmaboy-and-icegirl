@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/utils/network_level_manager/NetworkLevelManager.gd" type="Script" id=1]
+
+[node name="NetworkLevelManager" type="Node"]
+script = ExtResource( 1 )
+
+[node name="NetworkTick" type="Timer" parent="."]
+wait_time = 0.05
+
+[connection signal="timeout" from="NetworkTick" to="." method="_on_NetworkTick"]
