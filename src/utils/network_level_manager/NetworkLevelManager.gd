@@ -11,9 +11,10 @@ func start_sync():
 		rpc("sync_tick_timer", current_unix_time + 5)
 		
 remotesync func sync_tick_timer(unix_time: int):
-	while (OS.get_unix_time() != unix_time):
-		pass
-	network_tick_timer.start()
+	if (get_tree().get_rpc_sender_id() == 1):
+		while (OS.get_unix_time() != unix_time):
+			pass
+		network_tick_timer.start()
 
 func _on_NetworkTick():
 	print(tick)
