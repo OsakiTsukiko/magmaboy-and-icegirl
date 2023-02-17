@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/ui/main_menu/bg/bg_panel.tres" type="StyleBox" id=1]
-[ext_resource path="res://assets/ui/main_menu/button/button_font.tres" type="DynamicFont" id=2]
+[ext_resource path="res://assets/ui/menu/title/font.tres" type="DynamicFont" id=2]
 [ext_resource path="res://src/ui/level_selector/LevelSelector.gd" type="Script" id=3]
 
 [sub_resource type="StyleBoxFlat" id=1]
@@ -49,14 +49,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="Padding00" type="Control" parent="BG/VBoxContainer"]
-margin_right = 512.0
-margin_bottom = 20.0
-rect_min_size = Vector2( 0, 20 )
+margin_right = 1024.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 0, 40 )
 
 [node name="Label" type="Label" parent="BG/VBoxContainer"]
-margin_top = 24.0
-margin_right = 512.0
-margin_bottom = 40.0
+margin_top = 44.0
+margin_right = 1024.0
+margin_bottom = 84.0
 size_flags_horizontal = 3
 size_flags_vertical = 5
 custom_fonts/font = ExtResource( 2 )
@@ -65,35 +65,42 @@ align = 1
 valign = 1
 
 [node name="CenterContainer" type="CenterContainer" parent="BG/VBoxContainer"]
-margin_top = 44.0
-margin_right = 512.0
-margin_bottom = 276.0
+margin_top = 88.0
+margin_right = 1024.0
+margin_bottom = 576.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Panel" type="Panel" parent="BG/VBoxContainer/CenterContainer"]
-margin_left = 86.0
-margin_top = 6.0
-margin_right = 426.0
-margin_bottom = 226.0
-rect_min_size = Vector2( 340, 220 )
+margin_left = 177.0
+margin_top = 34.0
+margin_right = 847.0
+margin_bottom = 454.0
+rect_min_size = Vector2( 670, 420 )
 custom_styles/panel = SubResource( 1 )
 
-[node name="ScrollContainer" type="ScrollContainer" parent="BG/VBoxContainer/CenterContainer"]
-margin_left = 96.0
-margin_top = 16.0
-margin_right = 416.0
-margin_bottom = 216.0
-rect_min_size = Vector2( 320, 200 )
+[node name="MarginContainer" type="MarginContainer" parent="BG/VBoxContainer/CenterContainer/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+
+[node name="ScrollContainer" type="ScrollContainer" parent="BG/VBoxContainer/CenterContainer/Panel/MarginContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 660.0
+margin_bottom = 410.0
 theme = SubResource( 2 )
 
-[node name="LevelCont" type="GridContainer" parent="BG/VBoxContainer/CenterContainer/ScrollContainer"]
+[node name="LevelCont" type="GridContainer" parent="BG/VBoxContainer/CenterContainer/Panel/MarginContainer/ScrollContainer"]
 custom_constants/vseparation = 10
 custom_constants/hseparation = 10
 columns = 3
 
 [node name="Padding01" type="Control" parent="BG/VBoxContainer"]
-margin_top = 280.0
-margin_right = 512.0
-margin_bottom = 300.0
+margin_top = 580.0
+margin_right = 1024.0
+margin_bottom = 600.0
 rect_min_size = Vector2( 0, 20 )

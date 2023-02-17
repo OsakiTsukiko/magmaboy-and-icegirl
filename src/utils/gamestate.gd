@@ -9,7 +9,7 @@ var kicked_menu: Resource = load("res://src/ui/kicked_menu/KickedMenu.tscn")
 var level_selector: Resource = load("res://src/ui/level_selector/LevelSelector.tscn")
 
 var levels: Array = [
-	Utils.Level.new("Temp", preload("res://src/levels/level_00/Level00.tscn"), preload("res://assets/levels/banners/level_00.png"))
+	Utils.Level.new("Temp", preload("res://src/levels/level_00/Level00.tscn"), preload("res://assets/levels/banners/level_00.png")),
 ]
 
 var game_port: int
@@ -77,7 +77,8 @@ func accept_player_connect_req(id: int) -> void:
 
 func start_level(level_id: int) -> void:
 	print("Starting Level ", level_id)
-	rpc("start_level_bc", level_id)
+#	rpc("start_level_bc", level_id)
+	NetworkLevelManager.start_sync()
 
 # Network Signals
 
