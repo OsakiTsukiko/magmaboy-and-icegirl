@@ -78,7 +78,6 @@ func accept_player_connect_req(id: int) -> void:
 func start_level(level_id: int) -> void:
 	print("Starting Level ", level_id)
 #	rpc("start_level_bc", level_id)
-	NetworkLevelManager.start_sync()
 
 # Network Signals
 
