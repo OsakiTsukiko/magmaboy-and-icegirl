@@ -10,19 +10,28 @@ var level_selector: Resource = load("res://src/ui/level_selector/LevelSelector.t
 
 var levels: Array = [
 	Utils.Level.new("Temp", preload("res://src/levels/level_00/Level00.tscn"), preload("res://assets/levels/banners/level_00.png")),
+	Utils.Level.new("Level 1", preload("res://src/levels/level_01/Level01.tscn"), preload("res://assets/levels/banners/level_00.png")),
 ]
 
 var game_port: int
 var game_ip: String
 
 var character = null
+# 0 = MagmaBoy
+# 1 = IceGirl
 var username: String
+var other_username: String
+var my_pid: int
+var other_pid: int
+
+# var in_game: bool = false # NOT REALLY NEEDED
 
 # Signals
 signal player_join_request_signal
 signal kicked_reason_signal
 signal waiting_lobby_message_signal
 signal connect_error_scene_signal
+signal player_tick_signal
 
 func _ready() -> void:
 	get_tree().connect("network_peer_connected", self, "_network_peer_connected")
@@ -39,8 +48,10 @@ func init_server(username: String, character: int, game_port: int) -> void:
 	self.username = username
 	self.character = character
 	var peer := NetworkedMultiplayerENet.new()
+	print("starting srv on ", game_port)
 	peer.create_server(game_port, 1)
 	get_tree().network_peer = peer
+	my_pid = get_tree().get_network_unique_id()
 	get_tree().change_scene_to(lobby_scene)
 
 func init_client(username: String, game_ip: String, game_port: int) -> void:
@@ -50,8 +61,11 @@ func init_client(username: String, game_ip: String, game_port: int) -> void:
 	self.game_port = game_port
 	self.username = username
 	var peer := NetworkedMultiplayerENet.new()
+	print("starting srv on ", game_port)
 	peer.create_client(game_ip, game_port)
 	get_tree().network_peer = peer
+	other_pid = 1
+	my_pid = get_tree().get_network_unique_id()
 
 func reject_player_connect_req(id: int) -> void:
 	rpc_unreliable_id(id, "kick", "Request Rejected!")
@@ -72,12 +86,21 @@ func accept_player_connect_req(id: int) -> void:
 		cid = 0
 	if (character == 0):
 		cid = 1
-	rpc("accept_request", username, cid)
+	rpc_id(id, "accept_request", username, cid)
 	get_tree().change_scene_to(level_selector)
 
 func start_level(level_id: int) -> void:
 	print("Starting Level ", level_id)
-#	rpc("start_level_bc", level_id)
+	rpc("start_level_bc", level_id)
+
+func stream_player_pos(pos: Vector2):
+	rpc("player_tick", pos)
+
+func _physics_process(delta):
+	# if (in_game):
+	for node in get_tree().get_nodes_in_group("network_node"):
+		if (node.has_method("_network_process")):
+			node._network_process()
 
 # Network Signals
 
@@ -115,14 +138,19 @@ func _connected_to_server() -> void:
 remotesync func start_level_bc(level_id: int) -> void:
 	if (get_tree().get_rpc_sender_id() == 1):
 		get_tree().change_scene_to(levels[level_id].scene)
+		# SPAWN
+		# in_game = true
 
 puppetsync func accept_request(username: String, character: int) -> void:
+	other_username = username
 	self.character = character
 	var wlm_string = "Waiting for "
 	if (character == 0):
 		wlm_string += "[color=#97f7e4]" + username + "[/color] "
+		other_pid = 1
 	if (character == 1):
 		wlm_string += "[color=#e66247]" + username + "[/color] "
+		other_pid = 0
 	wlm_string += "to select a level!"
 	get_tree().change_scene_to(waiting_lobby)
 	call_deferred("emit_signal", "waiting_lobby_message_signal", wlm_string)
@@ -136,4 +164,10 @@ puppetsync func request_username() -> void:
 	rpc_id(1, "respond_username_request", username)
 
 mastersync func respond_username_request(username: String) -> void:
-	call_deferred("emit_signal", "player_join_request_signal", username, get_tree().get_rpc_sender_id())
+	other_pid = get_tree().get_rpc_sender_id()
+	other_username = username
+	call_deferred("emit_signal", "player_join_request_signal", username, other_pid)
+
+remote func player_tick(pos: Vector2):
+	if (get_tree().get_rpc_sender_id() != get_tree().get_network_unique_id()):
+		emit_signal("player_tick_signal", pos)
