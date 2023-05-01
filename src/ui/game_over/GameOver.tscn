@@ -1,0 +1,87 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://assets/fonts/PressStart2P.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://assets/ui/main_menu/button/button_normal.tres" type="StyleBox" id=2]
+[ext_resource path="res://assets/ui/main_menu/button/button_hover.tres" type="StyleBox" id=3]
+[ext_resource path="res://assets/ui/main_menu/button/button_pressed.tres" type="StyleBox" id=4]
+[ext_resource path="res://assets/ui/main_menu/bg/bg_panel.tres" type="StyleBox" id=5]
+[ext_resource path="res://src/ui/game_over/GameOver.gd" type="Script" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+size = 48
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+font_data = ExtResource( 1 )
+
+[node name="GameOver" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 6 )
+
+[node name="Panel" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = ExtResource( 5 )
+
+[node name="CenterContainer" type="CenterContainer" parent="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/CenterContainer"]
+margin_left = 262.0
+margin_top = 226.0
+margin_right = 762.0
+margin_bottom = 373.0
+rect_min_size = Vector2( 500, 0 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Panel/CenterContainer/VBoxContainer"]
+margin_right = 500.0
+margin_bottom = 147.0
+custom_colors/default_color = Color( 0.94902, 0.364706, 0.364706, 1 )
+custom_fonts/normal_font = SubResource( 1 )
+bbcode_enabled = true
+bbcode_text = "
+[center][shake rate=10 level=20]GAME OVER![/shake][/center]
+"
+text = "
+GAME OVER!
+"
+fit_content_height = true
+
+[node name="BTNCont" type="HBoxContainer" parent="Panel/CenterContainer/VBoxContainer"]
+visible = false
+margin_top = 151.0
+margin_right = 500.0
+margin_bottom = 187.0
+
+[node name="RestartBTN" type="Button" parent="Panel/CenterContainer/VBoxContainer/BTNCont"]
+margin_right = 248.0
+margin_bottom = 36.0
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 2 )
+custom_styles/hover = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 4 )
+custom_styles/normal = ExtResource( 2 )
+text = "Restart Level"
+
+[node name="LevelSelectorBTN" type="Button" parent="Panel/CenterContainer/VBoxContainer/BTNCont"]
+margin_left = 252.0
+margin_right = 500.0
+margin_bottom = 36.0
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 3 )
+custom_styles/hover = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 4 )
+custom_styles/normal = ExtResource( 2 )
+text = "Level Selector"
+
+[connection signal="pressed" from="Panel/CenterContainer/VBoxContainer/BTNCont/RestartBTN" to="." method="_on_RestartBTN_pressed"]
+[connection signal="pressed" from="Panel/CenterContainer/VBoxContainer/BTNCont/LevelSelectorBTN" to="." method="_on_LevelSelectorBTN_pressed"]

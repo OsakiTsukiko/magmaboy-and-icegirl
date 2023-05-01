@@ -2,13 +2,18 @@ extends Node2D
 
 onready var ig_spawner = $IGSpawner
 onready var mb_spawner = $MBSpawner
+onready var pause_menu = $CanvasLayer/PauseMenu
 
 var player_scene: Resource = load("res://src/utils/player/Player.tscn")
 
 var players: Array = []
 
+var is_paused: bool = false
+
 func _ready():
 	Gamestate.connect("player_tick_signal", self, "_player_tick_signal")
+	Gamestate.connect("pause_game_signal", self, "_pause_game_signal")
+	Gamestate.connect("resume_game_signal", self, "_resume_game_signal")
 	
 	var cam := Camera2D.new()
 	cam.current = true
@@ -39,5 +44,24 @@ func _ready():
 	player.add_child(cam)
 	players.push_back(player)
 
-func _player_tick_signal(pos: Vector2):
-	players[0].global_position = pos
+func _player_tick_signal(info: Utils.NPI):
+	if (is_paused):
+		return
+	players[0].global_position = info.pos
+	players[0].direction = info.direction
+
+func _physics_process(delta):
+	if (Input.is_action_just_pressed("pause")):
+		Gamestate.request_pause_game()
+
+func _pause_game_signal() -> void:
+	pause_menu.visible = true
+	is_paused = true
+	for p in players:
+		p.is_paused = true
+
+func _resume_game_signal() -> void:
+	pause_menu.visible = false
+	is_paused = false
+	for p in players:
+		p.is_paused = false

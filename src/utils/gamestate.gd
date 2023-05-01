@@ -7,6 +7,7 @@ var lobby_scene: Resource = load("res://src/ui/lobby/Lobby.tscn")
 var waiting_lobby: Resource = load("res://src/ui/waiting_lobby/WaitingLobby.tscn")
 var kicked_menu: Resource = load("res://src/ui/kicked_menu/KickedMenu.tscn")
 var level_selector: Resource = load("res://src/ui/level_selector/LevelSelector.tscn")
+var game_over_scene: Resource = load("res://src/ui/game_over/GameOver.tscn")
 
 var levels: Array = [
 	Utils.Level.new("Temp", preload("res://src/levels/level_00/Level00.tscn"), preload("res://assets/levels/banners/level_00.png")),
@@ -25,6 +26,7 @@ var my_pid: int
 var other_pid: int
 
 # var in_game: bool = false # NOT REALLY NEEDED
+var last_level_id: int = -1
 
 # Signals
 signal player_join_request_signal
@@ -32,6 +34,8 @@ signal kicked_reason_signal
 signal waiting_lobby_message_signal
 signal connect_error_scene_signal
 signal player_tick_signal
+signal pause_game_signal
+signal resume_game_signal
 
 func _ready() -> void:
 	get_tree().connect("network_peer_connected", self, "_network_peer_connected")
@@ -67,6 +71,8 @@ func init_client(username: String, game_ip: String, game_port: int) -> void:
 	other_pid = 1
 	my_pid = get_tree().get_network_unique_id()
 
+# UTILS (NETWORK.. i guess)
+
 func reject_player_connect_req(id: int) -> void:
 	rpc_unreliable_id(id, "kick", "Request Rejected!")
 	# the following code is very shady... but its the only
@@ -87,14 +93,34 @@ func accept_player_connect_req(id: int) -> void:
 	if (character == 0):
 		cid = 1
 	rpc_id(id, "accept_request", username, cid)
+	go_to_level_selector()
+
+func go_to_level_selector() -> void:
 	get_tree().change_scene_to(level_selector)
 
 func start_level(level_id: int) -> void:
 	print("Starting Level ", level_id)
+	last_level_id = level_id
 	rpc("start_level_bc", level_id)
 
-func stream_player_pos(pos: Vector2):
-	rpc("player_tick", pos)
+func restart_level() -> void:
+	# I could check if last_level_id is valid, but eh..
+	rpc("start_level_bc", last_level_id)
+
+#func stream_player_pos(pos: Vector2):
+#	rpc("player_tick", pos)
+
+func stream_player_info(info: Utils.NPI): # NPI KINDA USELESS
+	rpc("player_tick", info.pos, info.direction)
+
+func request_gameover():
+	rpc("gameover") # I guess anyone should be able to just say game over, but its kinda eh.. feels not right
+
+func request_pause_game():
+	rpc("pause_game")
+
+func request_resume_game():
+	rpc("resume_game")
 
 func _physics_process(delta):
 	# if (in_game):
@@ -135,6 +161,15 @@ func _connected_to_server() -> void:
 
 # Networking
 
+remotesync func pause_game() -> void:
+	call_deferred("emit_signal", "pause_game_signal")
+
+remotesync func resume_game() -> void:
+	call_deferred("emit_signal", "resume_game_signal")
+
+remotesync func gameover() -> void:
+	get_tree().change_scene_to(game_over_scene)
+
 remotesync func start_level_bc(level_id: int) -> void:
 	if (get_tree().get_rpc_sender_id() == 1):
 		get_tree().change_scene_to(levels[level_id].scene)
@@ -168,6 +203,6 @@ mastersync func respond_username_request(username: String) -> void:
 	other_username = username
 	call_deferred("emit_signal", "player_join_request_signal", username, other_pid)
 
-remote func player_tick(pos: Vector2):
+remote func player_tick(pos: Vector2, direction: bool):
 	if (get_tree().get_rpc_sender_id() != get_tree().get_network_unique_id()):
-		emit_signal("player_tick_signal", pos)
+		emit_signal("player_tick_signal", Utils.NPI.new(pos, direction))

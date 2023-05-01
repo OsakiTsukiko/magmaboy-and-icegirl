@@ -6,6 +6,7 @@ onready var left_rc: Node = $LeftRC
 onready var right_rc: Node = $RightRC
 onready var username_label: Node = $UsernameLabel
 onready var anim_player = $Sprite/AnimationPlayer
+onready var sprite = $Sprite
 
 # PSEUDO CONSTANTS
 export var GRAVITY_VEC: Vector2 = Vector2(0.0, 5000.0)
@@ -40,8 +41,13 @@ var is_wall_jumping: bool = false
 
 var velocity: Vector2 = Vector2.ZERO
 
+var direction: bool = false
+# false = left
+# true = right
+
 var username: String
 var character_id: int
+var is_paused: bool = false
 
 func is_player() -> bool:
 	return true
@@ -49,14 +55,12 @@ func is_player() -> bool:
 func entered_water():
 	print("entered water")
 	if (is_network_master() && Gamestate.character == 0):
-		pass
-		# RESET LEVEL
+		Gamestate.request_gameover()
 
 func entered_lava():
 	print("entered lava")
 	if (is_network_master() && Gamestate.character == 1):
-		pass
-		# RESET LEVEL
+		Gamestate.request_gameover()
 
 func preset_username(username: String):
 	self.username = username
@@ -74,10 +78,13 @@ func _toggle_debug(state: bool):
 
 func _network_process():
 	if (is_network_master()):
-		Gamestate.stream_player_pos(self.position)
+#		Gamestate.stream_player_pos(self.position)
+		Gamestate.stream_player_info(Utils.NPI.new(self.global_position, direction))
+	else:
+		sprite.flip_h = direction
 
 func _physics_process(delta):
-	if (is_network_master()):
+	if (is_network_master() && !is_paused):
 		ground_checks()
 		handle_input(delta)
 		do_physics(delta)
@@ -129,6 +136,14 @@ func do_physics(delta: float):
 		velocity.y = min(velocity.y, MAX_FALL_SPEED)
 	
 	velocity = move_and_slide(velocity, FLOOR_NORMAL)
+	
+	if (velocity.x < 0):
+		direction = true
+		
+	if (velocity.x > 0): 
+		direction = false
+	
+	sprite.flip_h = direction
 	
 	if (IS_DEBUGGING):
 		print(velocity)
