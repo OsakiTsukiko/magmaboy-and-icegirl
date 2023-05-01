@@ -1,0 +1,121 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://assets/ui/main_menu/bg/bg_panel.tres" type="StyleBox" id=1]
+[ext_resource path="res://assets/fonts/PressStart2P.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://assets/ui/main_menu/button/button_normal.tres" type="StyleBox" id=3]
+[ext_resource path="res://assets/ui/main_menu/button/button_hover.tres" type="StyleBox" id=4]
+[ext_resource path="res://assets/ui/main_menu/button/button_pressed.tres" type="StyleBox" id=5]
+[ext_resource path="res://assets/levels/temp/blue_diamond.png" type="Texture" id=6]
+[ext_resource path="res://src/ui/level_complete/LevelComplete.gd" type="Script" id=7]
+[ext_resource path="res://assets/levels/temp/red_diamond.png" type="Texture" id=8]
+
+[sub_resource type="DynamicFont" id=1]
+size = 48
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=3]
+font_data = ExtResource( 2 )
+
+[node name="LevelComplete" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 7 )
+
+[node name="Panel" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = ExtResource( 1 )
+
+[node name="CenterContainer" type="CenterContainer" parent="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/CenterContainer"]
+margin_left = 152.0
+margin_top = 236.0
+margin_right = 872.0
+margin_bottom = 363.0
+
+[node name="Label" type="Label" parent="Panel/CenterContainer/VBoxContainer"]
+margin_right = 720.0
+margin_bottom = 48.0
+custom_fonts/font = SubResource( 1 )
+text = "Level Complete!"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/CenterContainer/VBoxContainer"]
+margin_top = 52.0
+margin_right = 720.0
+margin_bottom = 127.0
+
+[node name="TextureRect" type="TextureRect" parent="Panel/CenterContainer/VBoxContainer/HBoxContainer"]
+margin_right = 75.0
+margin_bottom = 75.0
+rect_min_size = Vector2( 75, 75 )
+texture = ExtResource( 8 )
+expand = true
+
+[node name="LavaDiamondLabel" type="Label" parent="Panel/CenterContainer/VBoxContainer/HBoxContainer"]
+margin_left = 79.0
+margin_right = 358.0
+margin_bottom = 75.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+custom_fonts/font = SubResource( 1 )
+text = ": 0"
+valign = 1
+
+[node name="WaterDiamondLabel" type="Label" parent="Panel/CenterContainer/VBoxContainer/HBoxContainer"]
+margin_left = 362.0
+margin_right = 641.0
+margin_bottom = 75.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+custom_fonts/font = SubResource( 1 )
+text = "0 :"
+align = 2
+valign = 1
+
+[node name="TextureRect2" type="TextureRect" parent="Panel/CenterContainer/VBoxContainer/HBoxContainer"]
+margin_left = 645.0
+margin_right = 720.0
+margin_bottom = 75.0
+rect_min_size = Vector2( 75, 75 )
+texture = ExtResource( 6 )
+expand = true
+
+[node name="BTNCont" type="HBoxContainer" parent="Panel/CenterContainer/VBoxContainer"]
+visible = false
+margin_top = 131.0
+margin_right = 720.0
+margin_bottom = 167.0
+
+[node name="RestartBTN" type="Button" parent="Panel/CenterContainer/VBoxContainer/BTNCont"]
+margin_right = 358.0
+margin_bottom = 36.0
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 2 )
+custom_styles/hover = ExtResource( 4 )
+custom_styles/pressed = ExtResource( 5 )
+custom_styles/normal = ExtResource( 3 )
+text = "Restart Level"
+
+[node name="LevelSelectorBTN" type="Button" parent="Panel/CenterContainer/VBoxContainer/BTNCont"]
+margin_left = 362.0
+margin_right = 720.0
+margin_bottom = 36.0
+mouse_default_cursor_shape = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 3 )
+custom_styles/hover = ExtResource( 4 )
+custom_styles/pressed = ExtResource( 5 )
+custom_styles/normal = ExtResource( 3 )
+text = "Level Selector"
+
+[connection signal="pressed" from="Panel/CenterContainer/VBoxContainer/BTNCont/RestartBTN" to="." method="_on_RestartBTN_pressed"]
+[connection signal="pressed" from="Panel/CenterContainer/VBoxContainer/BTNCont/LevelSelectorBTN" to="." method="_on_LevelSelectorBTN_pressed"]

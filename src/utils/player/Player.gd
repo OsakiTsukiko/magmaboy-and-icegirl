@@ -78,6 +78,27 @@ func entered_water_diamond(diamond: Node2D):
 		if (!is_network_master()):
 			diamond.queue_free()
 
+func entered_lava_door():
+	if (character_id == 0):
+		Gamestate.magma_boy_is_done = true
+		if (get_tree().is_network_server() && Gamestate.magma_boy_is_done && Gamestate.ice_girl_is_done):
+			Gamestate.request_level_complete()
+
+func exited_lava_door():
+	if (character_id == 0):
+		Gamestate.magma_boy_is_done = false
+
+
+func entered_water_door():
+	if (character_id == 1):
+		Gamestate.ice_girl_is_done = true
+		if (get_tree().is_network_server() && Gamestate.magma_boy_is_done && Gamestate.ice_girl_is_done):
+			Gamestate.request_level_complete()
+
+func exited_water_door():
+	if (character_id == 1):
+		Gamestate.ice_girl_is_done = false
+
 func preset_username(username: String):
 	self.username = username
 

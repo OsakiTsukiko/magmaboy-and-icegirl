@@ -8,9 +8,10 @@ var waiting_lobby: Resource = load("res://src/ui/waiting_lobby/WaitingLobby.tscn
 var kicked_menu: Resource = load("res://src/ui/kicked_menu/KickedMenu.tscn")
 var level_selector: Resource = load("res://src/ui/level_selector/LevelSelector.tscn")
 var game_over_scene: Resource = load("res://src/ui/game_over/GameOver.tscn")
+var level_complete_scen: Resource = load("res://src/ui/level_complete/LevelComplete.tscn")
 
 var levels: Array = [
-	Utils.Level.new("Level 1", preload("res://src/levels/level_01/Level01.tscn"), preload("res://assets/levels/banners/level_00.png")),
+	Utils.Level.new("Level 1", preload("res://src/levels/level_01/Level01.tscn"), preload("res://assets/levels/banners/level_01.png")),
 ]
 
 var game_port: int
@@ -28,6 +29,8 @@ var other_pid: int
 var last_level_id: int = -1
 var lava_diamonds: int = 0
 var water_diamonds: int = 0
+var magma_boy_is_done: bool = false
+var ice_girl_is_done: bool = false
 
 # Signals
 signal player_join_request_signal
@@ -129,6 +132,9 @@ func request_add_lava_diamond():
 func request_add_water_diamond():
 	rpc("add_water_diamond")
 
+func request_level_complete():
+	rpc("level_complete")
+
 func _physics_process(delta):
 	# if (in_game):
 	for node in get_tree().get_nodes_in_group("network_node"):
@@ -168,6 +174,10 @@ func _connected_to_server() -> void:
 
 # Networking
 
+remotesync func level_complete() -> void:
+	if (get_tree().get_rpc_sender_id() == 1):
+		get_tree().change_scene_to(level_complete_scen)
+
 remotesync func add_lava_diamond() -> void:
 	lava_diamonds += 1
 
@@ -187,6 +197,8 @@ remotesync func start_level_bc(level_id: int) -> void:
 	if (get_tree().get_rpc_sender_id() == 1):
 		lava_diamonds = 0
 		water_diamonds = 0
+		magma_boy_is_done = false
+		ice_girl_is_done = false
 		get_tree().change_scene_to(levels[level_id].scene)
 		# SPAWN
 		# in_game = true
