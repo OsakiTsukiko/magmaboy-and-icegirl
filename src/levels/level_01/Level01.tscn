@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://assets/levels/temp/tileset_2.png" type="Texture" id=1]
 [ext_resource path="res://src/levels/Level.gd" type="Script" id=2]
@@ -10,6 +10,8 @@
 [ext_resource path="res://src/levels/utils/WaterParticles.tscn" type="PackedScene" id=8]
 [ext_resource path="res://src/levels/utils/LavaDiamond.tscn" type="PackedScene" id=9]
 [ext_resource path="res://src/levels/utils/WaterDiamond.tscn" type="PackedScene" id=10]
+[ext_resource path="res://assets/levels/temp/bg_l2.png" type="Texture" id=11]
+[ext_resource path="res://assets/levels/temp/bg_l1.png" type="Texture" id=12]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
@@ -399,6 +401,29 @@ points = PoolVector2Array( 0, 16, 0, 16, 0, 0, 8, 0, 16, 8, 16, 16, 0, 16 )
 
 [node name="Level01" type="Node2D"]
 script = ExtResource( 2 )
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+layer = -1
+offset = Vector2( 200, 100 )
+scale = Vector2( 2.5, 2.5 )
+transform = Transform2D( 2.5, 0, 0, 2.5, 200, 100 )
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.001, 0.001 )
+motion_mirroring = Vector2( 256, 150 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer2"]
+texture = ExtResource( 11 )
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.005, 0.005 )
+motion_mirroring = Vector2( 256, 150 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+texture = ExtResource( 12 )
+
+[node name="CanvasModulate" type="CanvasModulate" parent="ParallaxBackground"]
+color = Color( 0.160156, 0.160156, 0.160156, 1 )
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource( 7 )
