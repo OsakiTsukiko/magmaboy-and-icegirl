@@ -10,7 +10,6 @@ var level_selector: Resource = load("res://src/ui/level_selector/LevelSelector.t
 var game_over_scene: Resource = load("res://src/ui/game_over/GameOver.tscn")
 
 var levels: Array = [
-	Utils.Level.new("Temp", preload("res://src/levels/level_00/Level00.tscn"), preload("res://assets/levels/banners/level_00.png")),
 	Utils.Level.new("Level 1", preload("res://src/levels/level_01/Level01.tscn"), preload("res://assets/levels/banners/level_00.png")),
 ]
 

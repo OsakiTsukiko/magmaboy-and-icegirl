@@ -1,4 +1,4 @@
-extends Node2D
+class_name GameLevel extends Node2D
 
 onready var ig_spawner = $IGSpawner
 onready var mb_spawner = $MBSpawner
@@ -16,6 +16,7 @@ func _ready():
 	Gamestate.connect("resume_game_signal", self, "_resume_game_signal")
 	
 	var cam := Camera2D.new()
+#	cam.zoom = Vector2(.85, .85)
 	cam.current = true
 	
 	var other_player: Node2D = player_scene.instance()
@@ -50,9 +51,12 @@ func _player_tick_signal(info: Utils.NPI):
 	players[0].global_position = info.pos
 	players[0].direction = info.direction
 
-func _physics_process(delta):
+func _process(delta):
 	if (Input.is_action_just_pressed("pause")):
-		Gamestate.request_pause_game()
+		if (is_paused):
+			Gamestate.request_resume_game()
+		else:
+			Gamestate.request_pause_game()
 
 func _pause_game_signal() -> void:
 	pause_menu.visible = true
