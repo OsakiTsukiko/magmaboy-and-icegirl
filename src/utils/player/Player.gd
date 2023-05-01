@@ -53,14 +53,30 @@ func is_player() -> bool:
 	return true
 
 func entered_water():
-	print("entered water")
 	if (is_network_master() && Gamestate.character == 0):
 		Gamestate.request_gameover()
 
 func entered_lava():
-	print("entered lava")
 	if (is_network_master() && Gamestate.character == 1):
 		Gamestate.request_gameover()
+
+func entered_lava_diamond(diamond: Node2D):
+	if (Gamestate.character == 0):
+		if (is_network_master()):
+			diamond.queue_free()
+			Gamestate.request_add_lava_diamond()
+	else:
+		if (!is_network_master()):
+			diamond.queue_free()
+
+func entered_water_diamond(diamond: Node2D):
+	if (Gamestate.character == 1):
+		if (is_network_master()):
+			diamond.queue_free()
+			Gamestate.request_add_water_diamond()
+	else:
+		if (!is_network_master()):
+			diamond.queue_free()
 
 func preset_username(username: String):
 	self.username = username

@@ -26,6 +26,8 @@ var other_pid: int
 
 # var in_game: bool = false # NOT REALLY NEEDED
 var last_level_id: int = -1
+var lava_diamonds: int = 0
+var water_diamonds: int = 0
 
 # Signals
 signal player_join_request_signal
@@ -121,6 +123,12 @@ func request_pause_game():
 func request_resume_game():
 	rpc("resume_game")
 
+func request_add_lava_diamond():
+	rpc("add_lava_diamond")
+
+func request_add_water_diamond():
+	rpc("add_water_diamond")
+
 func _physics_process(delta):
 	# if (in_game):
 	for node in get_tree().get_nodes_in_group("network_node"):
@@ -160,6 +168,12 @@ func _connected_to_server() -> void:
 
 # Networking
 
+remotesync func add_lava_diamond() -> void:
+	lava_diamonds += 1
+
+remotesync func add_water_diamond() -> void:
+	water_diamonds += 1
+
 remotesync func pause_game() -> void:
 	call_deferred("emit_signal", "pause_game_signal")
 
@@ -171,6 +185,8 @@ remotesync func gameover() -> void:
 
 remotesync func start_level_bc(level_id: int) -> void:
 	if (get_tree().get_rpc_sender_id() == 1):
+		lava_diamonds = 0
+		water_diamonds = 0
 		get_tree().change_scene_to(levels[level_id].scene)
 		# SPAWN
 		# in_game = true
