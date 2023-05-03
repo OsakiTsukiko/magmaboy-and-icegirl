@@ -1,5 +1,7 @@
 extends Control
 
+onready var info_win = $InfoWin
+
 var host_menu_scene: Resource = load("res://src/ui/host_menu/HostMenu.tscn")
 var connect_menu_scene: Resource = load("res://src/ui/connect_menu/ConnectMenu.tscn")
 
@@ -12,3 +14,6 @@ func _on_HostBTN_pressed() -> void:
 
 func _on_ConnectBTN_pressed() -> void:
 	get_tree().change_scene_to(connect_menu_scene)
+
+func _on_InfoBTN_pressed():
+	info_win.popup_centered()

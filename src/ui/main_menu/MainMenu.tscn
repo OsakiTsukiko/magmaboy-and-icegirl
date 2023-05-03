@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://assets/fonts/PressStart2P.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://assets/ui/main_menu/button/button_pressed.tres" type="StyleBox" id=2]
@@ -8,6 +8,8 @@
 [ext_resource path="res://assets/icons/github.png" type="Texture" id=6]
 [ext_resource path="res://src/ui/main_menu/MainMenu.gd" type="Script" id=7]
 [ext_resource path="res://assets/ui/main_menu/bg/bg_panel.tres" type="StyleBox" id=8]
+[ext_resource path="res://assets/icons/info_icon.png" type="Texture" id=9]
+[ext_resource path="res://assets/fonts/Monocraft.ttf" type="DynamicFontData" id=10]
 
 [sub_resource type="DynamicFont" id=2]
 size = 40
@@ -25,6 +27,9 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id=9]
 shader = SubResource( 8 )
+
+[sub_resource type="DynamicFont" id=10]
+font_data = ExtResource( 10 )
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
@@ -98,10 +103,27 @@ margin_right = 500.0
 margin_bottom = 301.0
 
 [node name="padding_01" type="Control" parent="BG/CenterContainer/VBoxContainer/HBoxContainer"]
-margin_right = 456.0
+margin_right = 403.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="InfoBTN" type="TextureButton" parent="BG/CenterContainer/VBoxContainer/HBoxContainer"]
+material = SubResource( 9 )
+margin_left = 407.0
+margin_right = 447.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 40, 40 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 9 )
+expand = true
+stretch_mode = 5
+
+[node name="padding_02" type="Control" parent="BG/CenterContainer/VBoxContainer/HBoxContainer"]
+margin_left = 451.0
+margin_right = 456.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 5, 0 )
 
 [node name="GithubBTN" type="TextureButton" parent="BG/CenterContainer/VBoxContainer/HBoxContainer"]
 material = SubResource( 9 )
@@ -114,6 +136,41 @@ texture_normal = ExtResource( 6 )
 expand = true
 stretch_mode = 5
 
+[node name="InfoWin" type="WindowDialog" parent="."]
+margin_right = 48.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 500, 300 )
+
+[node name="Panel" type="Panel" parent="InfoWin"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="MarginContainer" type="MarginContainer" parent="InfoWin/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="InfoWin/Panel/MarginContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 490.0
+margin_bottom = 290.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+custom_fonts/font = SubResource( 10 )
+text = "MagmaBoy and IceGirl
+
+Controls:
+Arrow Keys - Movement
+C - Jump
+X - Dash"
+align = 1
+valign = 1
+
 [connection signal="pressed" from="BG/CenterContainer/VBoxContainer/HostBTN" to="." method="_on_HostBTN_pressed"]
 [connection signal="pressed" from="BG/CenterContainer/VBoxContainer/ConnectBTN" to="." method="_on_ConnectBTN_pressed"]
+[connection signal="pressed" from="BG/CenterContainer/VBoxContainer/HBoxContainer/InfoBTN" to="." method="_on_InfoBTN_pressed"]
 [connection signal="pressed" from="BG/CenterContainer/VBoxContainer/HBoxContainer/GithubBTN" to="." method="_on_GithubBTN_pressed"]
